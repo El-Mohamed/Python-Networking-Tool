@@ -15,18 +15,23 @@ def scanport(port):
         return False
 
 
+def startScanning():
+    for port in range(1, 1024):
+        result = scanport(port)
+        if (result):
+            print("Port {} is open".format(port))
+        else:
+            print("Port {} is closed".format(port))
+
+
 window = Tk()
 
 window.title("MM Network Tool")
 
 window.geometry('600x600')
 
+startButton = Button(window, text="Start Scanning", command=startScanning)
+
+startButton.grid(column=1, row=0)
+
 window.mainloop()
-
-
-for port in range(1, 1024):
-    result = scanport(port)
-    if (result):
-        print("Port {} is open".format(port))
-    else:
-        print("Port {} is closed".format(port))
