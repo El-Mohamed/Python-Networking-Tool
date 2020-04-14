@@ -53,6 +53,9 @@ window = Tk()
 window.title("MM Network Tool")
 window.geometry('600x600')
 
+label = Label(window, text="Scanner Results")
+label.grid(column=0, row=0)
+
 scroller = scrolledtext.ScrolledText(window, width=40, height=10)
 scroller.grid(column=0, row=0)
 
