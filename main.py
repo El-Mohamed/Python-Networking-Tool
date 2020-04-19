@@ -1,7 +1,9 @@
 from tkinter import scrolledtext
+from tkinter import messagebox
 from tkinter import *
 import socket
 import threading
+import re as regex
 
 # Functions
 
@@ -19,15 +21,19 @@ def startScanning():
     global scroller, targetHost
     getTarget()
     message = None
-    for port in range(1, 1024):
-        portIsOpen = scanSinglePort(port, targetHost)
+    isValid = checkIP(targetHost)
+    if(isValid):
+        for port in range(1, 1024):
+            portIsOpen = scanSinglePort(port, targetHost)
 
-        if (portIsOpen):
-            message = "Port {} is open".format(port) + "\n"
-        else:
-            message = "Port {} is closed".format(port) + "\n"
+            if (portIsOpen):
+                message = "Port {} is open".format(port) + "\n"
+            else:
+                message = "Port {} is closed".format(port) + "\n"
 
-        addToScroller(message)
+            addToScroller(message)
+    else:
+        messagebox.showinfo('Error', 'IP Is not valid')
 
 
 def addToScroller(message):
@@ -43,6 +49,12 @@ def handleButton():
 def getTarget():
     global textField, targetHost
     targetHost = textField.get()
+
+
+def checkIP(ipaddres):
+    res = regex.search(
+        "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$", ipaddres)
+    return res
 
 # Main
 
